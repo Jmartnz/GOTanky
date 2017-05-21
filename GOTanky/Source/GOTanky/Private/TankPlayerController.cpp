@@ -6,7 +6,15 @@
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Warning, TEXT("TankPlayerController > BeginPlay"))
+	ATank* ControlledTank = GetControlledTank();
+	if (ControlledTank)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("TankPlayerController > My Tank is: %s"), *ControlledTank->GetName())
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("TankPlayerController is not controlling any Tank..."))
+	}
 }
 
 ATank* ATankPlayerController::GetControlledTank() const
