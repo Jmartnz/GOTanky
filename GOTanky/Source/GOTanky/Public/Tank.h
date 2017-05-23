@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "TankAimingComponent.h"
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
@@ -15,6 +16,9 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 	void AimAt(FVector HitLocation) const;
+
+protected:
+	UTankAimingComponent* TankAimingComponent = nullptr;
 
 private:	
 	// Called to bind functionality to input
