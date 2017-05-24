@@ -28,6 +28,12 @@ void ATank::AimAt(FVector HitLocation) const
 	TankAimingComponent->AimAt(HitLocation);
 }
 
+UFUNCTION(BlueprintCallable, Category = Setup)
+void ATank::SetBarrelReference(UStaticMeshComponent* BarrelToSet)
+{
+	TankAimingComponent->SetBarrelReference(BarrelToSet);
+}
+
 // Called to bind functionality to input
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
