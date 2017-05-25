@@ -25,7 +25,7 @@ void ATank::Tick(float DeltaTime)
 
 void ATank::AimAt(FVector HitLocation) const
 {
-	TankAimingComponent->AimAt(HitLocation);
+	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
 
 UFUNCTION(BlueprintCallable, Category = Setup)

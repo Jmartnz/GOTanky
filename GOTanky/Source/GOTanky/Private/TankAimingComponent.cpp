@@ -33,11 +33,22 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	// ...
 }
 
-void UTankAimingComponent::AimAt(FVector HitLocation) const
+void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) const
 {
 	if (!Barrel) { return; }
-	FVector BarrelLocation = Barrel->GetComponentLocation();
-	UE_LOG(LogTemp, Warning, TEXT("%s > Aiming at: %s, from: %s"), *GetOwner()->GetName(), *HitLocation.ToString(), *BarrelLocation.ToString())
+
+	FVector OutLaunchVelocity;
+	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
+
+	const FCollisionResponseParams& ResponseParams = FCollisionResponseParams::DefaultResponseParam;
+	const TArray<AActor*>& ActorsToIgnore = TArray<AActor*>();
+
+	if (UGameplayStatics::SuggestProjectileVelocity(this, OutLaunchVelocity, StartLocation, HitLocation, 
+		LaunchSpeed, false, 0, 0, ESuggestProjVelocityTraceOption::DoNotTrace))
+	{
+		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
+		UE_LOG(LogTemp, Warning, TEXT("%s > firing at: %s"), *GetOwner()->GetName(), *AimDirection.ToString())
+	}
 }
 
 UFUNCTION(BlueprintCallable, Category = Setup)

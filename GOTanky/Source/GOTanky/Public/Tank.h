@@ -15,9 +15,14 @@ public:
 	ATank();
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
+
 	void AimAt(FVector HitLocation) const;
+
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
+
+	UPROPERTY(EditAnywhere, Category = Firing)
+	float LaunchSpeed = 10000; // TODO Find sensible value
 
 protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
