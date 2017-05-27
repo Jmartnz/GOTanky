@@ -3,52 +3,37 @@
 #include "GOTanky.h"
 #include "TankAimingComponent.h"
 
-
-// Sets default values for this component's properties
-UTankAimingComponent::UTankAimingComponent()
-{
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
-}
-
-
-// Called when the game starts
-void UTankAimingComponent::BeginPlay()
-{
-	Super::BeginPlay();
-
-	// ...
-	
-}
-
-
-// Called every frame
-void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
-}
-
-void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) const
+void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
 	if (!Barrel) { return; }
 
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
+	bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity
+	(
+		this,
+		OutLaunchVelocity,
+		StartLocation,
+		HitLocation,
+		LaunchSpeed,
+		ESuggestProjVelocityTraceOption::DoNotTrace
+	);
 
-	const FCollisionResponseParams& ResponseParams = FCollisionResponseParams::DefaultResponseParam;
-	const TArray<AActor*>& ActorsToIgnore = TArray<AActor*>();
-
-	if (UGameplayStatics::SuggestProjectileVelocity(this, OutLaunchVelocity, StartLocation, HitLocation, 
-		LaunchSpeed, false, 0, 0, ESuggestProjVelocityTraceOption::DoNotTrace))
+	if(bHaveAimSolution)
 	{
 		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
-		UE_LOG(LogTemp, Warning, TEXT("%s > firing at: %s"), *GetOwner()->GetName(), *AimDirection.ToString())
+		MoveBarrelTowards(AimDirection);
+		// UE_LOG(LogTemp, Warning, TEXT("%s > firing at: %s"), *GetOwner()->GetName(), *AimDirection.ToString())
 	}
+}
+
+void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
+{
+	// TODO
+	FRotator BarrelRotation = Barrel->GetForwardVector().Rotation();
+	FRotator AimDirectionAsRotator = AimDirection.Rotation();
+	FRotator DeltaRotator = AimDirectionAsRotator - BarrelRotation;
+	UE_LOG(LogTemp, Warning, TEXT("%s > DeltaRotator: %s"), *GetOwner()->GetName(), *DeltaRotator.ToString())
 }
 
 UFUNCTION(BlueprintCallable, Category = Setup)
