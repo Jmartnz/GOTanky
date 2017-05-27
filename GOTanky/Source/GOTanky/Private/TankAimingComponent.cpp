@@ -1,7 +1,19 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "GOTanky.h"
+#include "TankBarrel.h"
 #include "TankAimingComponent.h"
+
+// Sets default values for this component's properties
+UTankAimingComponent::UTankAimingComponent()
+{
+	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
+	// off to improve performance if you don't need them.
+	bWantsBeginPlay = true;
+	PrimaryComponentTick.bCanEverTick = true;
+
+	// ...
+}
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
@@ -23,21 +35,18 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	{
 		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
-		// UE_LOG(LogTemp, Warning, TEXT("%s > firing at: %s"), *GetOwner()->GetName(), *AimDirection.ToString())
 	}
 }
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
-	// TODO
 	FRotator BarrelRotation = Barrel->GetForwardVector().Rotation();
 	FRotator AimDirectionAsRotator = AimDirection.Rotation();
 	FRotator DeltaRotator = AimDirectionAsRotator - BarrelRotation;
-	UE_LOG(LogTemp, Warning, TEXT("%s > DeltaRotator: %s"), *GetOwner()->GetName(), *DeltaRotator.ToString())
+	Barrel->Elevate(5); // TODO find sensible value
 }
 
-UFUNCTION(BlueprintCallable, Category = Setup)
-void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent* BarrelToSet)
+void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	Barrel = BarrelToSet;
 }

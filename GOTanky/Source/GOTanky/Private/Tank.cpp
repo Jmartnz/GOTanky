@@ -2,6 +2,7 @@
 
 #include "GOTanky.h"
 #include "Tank.h"
+#include "TankBarrel.h"
 
 // Sets default values
 ATank::ATank()
@@ -29,7 +30,7 @@ void ATank::AimAt(FVector HitLocation) const
 }
 
 UFUNCTION(BlueprintCallable, Category = Setup)
-void ATank::SetBarrelReference(UStaticMeshComponent* BarrelToSet)
+void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	TankAimingComponent->SetBarrelReference(BarrelToSet);
 }
