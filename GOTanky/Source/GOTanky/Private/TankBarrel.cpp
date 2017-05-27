@@ -3,8 +3,8 @@
 #include "GOTanky.h"
 #include "TankBarrel.h"
 
-void UTankBarrel::Elevate(float DegreesPerSecond) const
+void UTankBarrel::Elevate(float RelativeSpeed) const
 {
-	UE_LOG(LogTemp, Warning, TEXT("Barrel elevated to 5"))
+	// TODO
 }
 

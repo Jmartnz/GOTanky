@@ -2,6 +2,7 @@
 
 #include "GOTanky.h"
 #include "TankPlayerController.h"
+#include "Tank.h"
 
 #define OUT
 

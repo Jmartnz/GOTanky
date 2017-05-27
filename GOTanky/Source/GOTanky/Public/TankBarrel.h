@@ -14,14 +14,14 @@ class GOTANKY_API UTankBarrel : public UStaticMeshComponent
 	GENERATED_BODY()
 	
 public:
-	void Elevate(float DegreesPerSecond) const;
+	void Elevate(float RelativeSpeed) const;
 
 private:
 	UPROPERTY(EditAnywhere, Category = Setup)
 	float MaxDegreesPerSecond = 20;
 	UPROPERTY(EditAnywhere, Category = Setup)
-	float MaxElevationDegree = 20;
+	float MaxElevationDegrees = 40;
 	UPROPERTY(EditAnywhere, Category = Setup)
-	float MinElevationDegree = 20;
+	float MinElevationDegrees = 0;
 
 };

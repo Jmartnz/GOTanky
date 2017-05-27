@@ -2,10 +2,10 @@
 
 #pragma once
 
-#include "TankAimingComponent.h"
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
+class UTankAimingComponent;
 class UTankBarrel;
 
 UCLASS()
@@ -16,7 +16,6 @@ class GOTANKY_API ATank : public APawn
 public:	
 	ATank();
 	virtual void BeginPlay() override;
-	virtual void Tick(float DeltaTime) override;
 
 	void AimAt(FVector HitLocation) const;
 
