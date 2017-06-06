@@ -2,6 +2,7 @@
 
 #include "GOTanky.h"
 #include "TankAimingComponent.h"
+#include "TankTurret.h"
 #include "TankBarrel.h"
 
 // Sets default values for this component's properties
@@ -38,6 +39,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	if(bHaveAimSolution)
 	{
 		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
+		MoveTurretTowards(AimDirection);
 		MoveBarrelTowards(AimDirection);
 		UE_LOG(LogTemp, Warning, TEXT("%f, Solution found"), TimeSeconds)
 	}
@@ -47,12 +49,29 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	}
 }
 
+void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
+{
+	FRotator TurretRotation = Turret->GetForwardVector().Rotation();
+	FRotator AimDirectionAsRotator = AimDirection.Rotation();
+	FRotator DeltaRotator = AimDirectionAsRotator - TurretRotation;
+	
+	// Turret always rotates on the X axis, that is Yaw
+	Turret->Rotate(DeltaRotator.Yaw);
+}
+
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
 	FRotator BarrelRotation = Barrel->GetForwardVector().Rotation();
 	FRotator AimDirectionAsRotator = AimDirection.Rotation();
 	FRotator DeltaRotator = AimDirectionAsRotator - BarrelRotation;
-	Barrel->Elevate(5); // TODO find sensible value
+
+	// Barrel only elevates (rotates on the Y axis), that is Pitch
+	Barrel->Elevate(DeltaRotator.Pitch);
+}
+
+void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
+{
+	Turret = TurretToSet;
 }
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
