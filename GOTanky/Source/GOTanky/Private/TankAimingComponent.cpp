@@ -15,6 +15,16 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
+void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
+{
+	Turret = TurretToSet;
+}
+
+void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
+{
+	Barrel = BarrelToSet;
+}
+
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
 	if (!Barrel) { return; }
@@ -41,7 +51,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveTurretTowards(AimDirection);
 		MoveBarrelTowards(AimDirection);
-		UE_LOG(LogTemp, Warning, TEXT("%f, Solution found"), TimeSeconds)
+		// UE_LOG(LogTemp, Warning, TEXT("%f, Solution found"), TimeSeconds)
 	}
 	else
 	{
@@ -67,14 +77,4 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 
 	// Barrel only elevates (rotates on the Y axis), that is Pitch
 	Barrel->Elevate(DeltaRotator.Pitch);
-}
-
-void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
-{
-	Turret = TurretToSet;
-}
-
-void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
-{
-	Barrel = BarrelToSet;
 }

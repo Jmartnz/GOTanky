@@ -24,16 +24,19 @@ void ATank::AimAt(FVector HitLocation) const
 	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
 
-UFUNCTION(BlueprintCallable, Category = Setup)
 void ATank::SetTurretReference(UTankTurret* TurretToSet)
 {
 	TankAimingComponent->SetTurretReference(TurretToSet);
 }
 
-UFUNCTION(BlueprintCallable, Category = Setup)
 void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	TankAimingComponent->SetBarrelReference(BarrelToSet);
+}
+
+void ATank::Fire() const
+{
+	UE_LOG(LogTemp, Warning, TEXT("%f - %s is firing!"), GetWorld()->GetTimeSeconds(), *GetName())
 }
 
 // Called to bind functionality to input

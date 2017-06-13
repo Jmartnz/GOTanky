@@ -15,12 +15,11 @@ class GOTANKY_API UTankAimingComponent : public UActorComponent
 
 public:
 	UTankAimingComponent();
-	void AimAt(FVector HitLocation, float LaunchSpeed);
-
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetTurretReference(UTankTurret* TurretToSet);
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
+	void AimAt(FVector HitLocation, float LaunchSpeed);
 
 private:
 	UTankTurret* Turret = nullptr;
