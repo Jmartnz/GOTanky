@@ -8,6 +8,7 @@
 class UTankAimingComponent;
 class UTankTurret;
 class UTankBarrel;
+class AProjectile;
 
 UCLASS()
 class GOTANKY_API ATank : public APawn
@@ -30,6 +31,9 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = Firing)
 	float LaunchSpeed = 10000; // TODO Find sensible value
+
+	UPROPERTY(EditAnywhere, Category = Setup)
+	TSubclassOf<AProjectile> Projectile;
 
 protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;

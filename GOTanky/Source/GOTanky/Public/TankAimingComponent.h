@@ -19,6 +19,7 @@ public:
 	void SetTurretReference(UTankTurret* TurretToSet);
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
+	UTankBarrel* GetBarrel() const;
 	void AimAt(FVector HitLocation, float LaunchSpeed);
 
 private:

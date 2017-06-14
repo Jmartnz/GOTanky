@@ -4,6 +4,7 @@
 #include "Tank.h"
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
+#include "Projectile.h"
 
 // Sets default values
 ATank::ATank()
@@ -37,6 +38,12 @@ void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
 void ATank::Fire() const
 {
 	UE_LOG(LogTemp, Warning, TEXT("%f - %s is firing!"), GetWorld()->GetTimeSeconds(), *GetName())
+	auto NewProjectile = GetWorld()->SpawnActor<AProjectile>(
+		Projectile,
+		TankAimingComponent->GetBarrel()->GetSocketLocation(FName("Projectile")),
+		TankAimingComponent->GetBarrel()->GetSocketRotation(FName("Projectile"))
+	);
+	NewProjectile->Launch(LaunchSpeed);
 }
 
 // Called to bind functionality to input
