@@ -21,7 +21,11 @@ void ATankAIController::Tick(float DeltaTime)
 		// Aim towards the player
 		FVector PlayerLocation = GetPlayerTank()->GetTargetLocation();
 		GetControlledTank()->AimAt(PlayerLocation);
-
+		if (GetControlledTank()->HasFinishedReloading())
+		{
+			GetControlledTank()->Fire();
+			GetControlledTank()->Reload();
+		}
 		// TODO Fire if ready
 	}
 }

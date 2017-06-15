@@ -25,6 +25,11 @@ void ATank::AimAt(FVector HitLocation) const
 	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
 
+bool ATank::HasFinishedReloading()
+{
+	return (LastReloadTime + ReloadDuration) < GetWorld()->GetTimeSeconds();
+}
+
 void ATank::SetTurretReference(UTankTurret* TurretToSet)
 {
 	TankAimingComponent->SetTurretReference(TurretToSet);
@@ -44,6 +49,11 @@ void ATank::Fire() const
 		TankAimingComponent->GetBarrel()->GetSocketRotation(FName("Projectile"))
 	);
 	NewProjectile->Launch(LaunchSpeed);
+}
+
+void ATank::Reload()
+{
+	LastReloadTime = GetWorld()->GetTimeSeconds();
 }
 
 // Called to bind functionality to input

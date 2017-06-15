@@ -25,12 +25,21 @@ public:
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
 	void AimAt(FVector HitLocation) const;
+	bool HasFinishedReloading();
 
 	UFUNCTION(BlueprintCallable, Category = Actions)
 	void Fire() const;
 
+	UFUNCTION(BlueprintCallable, Category = Actions)
+	void Reload();
+
 	UPROPERTY(EditAnywhere, Category = Firing)
 	float LaunchSpeed = 10000; // TODO Find sensible value
+
+	UPROPERTY(EditAnywhere, Category = Firing)
+	float ReloadDuration = 5.0f; // TODO Find sensible value
+
+	float LastReloadTime = 0.0f; // TODO Find sensible value
 
 	UPROPERTY(EditAnywhere, Category = Setup)
 	TSubclassOf<AProjectile> Projectile;
