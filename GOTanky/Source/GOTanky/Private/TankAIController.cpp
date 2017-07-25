@@ -26,7 +26,6 @@ void ATankAIController::Tick(float DeltaTime)
 			GetControlledTank()->Fire();
 			GetControlledTank()->Reload();
 		}
-		// TODO Fire if ready
 	}
 }
 

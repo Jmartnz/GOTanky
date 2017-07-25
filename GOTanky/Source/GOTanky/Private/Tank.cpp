@@ -27,7 +27,7 @@ void ATank::AimAt(FVector HitLocation) const
 
 bool ATank::HasFinishedReloading()
 {
-	return (LastReloadTime + ReloadDuration) < GetWorld()->GetTimeSeconds();
+	return (LastReloadTime + ReloadDuration) <= GetWorld()->GetTimeSeconds();
 }
 
 void ATank::SetTurretReference(UTankTurret* TurretToSet)
@@ -40,15 +40,28 @@ void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
 	TankAimingComponent->SetBarrelReference(BarrelToSet);
 }
 
-void ATank::Fire() const
+void ATank::SetRightTrackReference(UTankTrack* TrackToSet)
 {
-	UE_LOG(LogTemp, Warning, TEXT("%f - %s is firing!"), GetWorld()->GetTimeSeconds(), *GetName())
-	auto NewProjectile = GetWorld()->SpawnActor<AProjectile>(
-		Projectile,
-		TankAimingComponent->GetBarrel()->GetSocketLocation(FName("Projectile")),
-		TankAimingComponent->GetBarrel()->GetSocketRotation(FName("Projectile"))
-	);
-	NewProjectile->Launch(LaunchSpeed);
+	TankAimingComponent->SetRightTrackReference(TrackToSet);
+}
+
+void ATank::SetLeftTrackReference(UTankTrack* TrackToSet)
+{
+	TankAimingComponent->SetLeftTrackReference(TrackToSet);
+}
+
+void ATank::Fire()
+{
+	//if (HasFinishedReloading()) {
+		UE_LOG(LogTemp, Warning, TEXT("%f - %s is firing!"), GetWorld()->GetTimeSeconds(), *GetName())
+			auto NewProjectile = GetWorld()->SpawnActor<AProjectile>(
+				Projectile,
+				TankAimingComponent->GetBarrel()->GetSocketLocation(FName("Projectile")),
+				TankAimingComponent->GetBarrel()->GetSocketRotation(FName("Projectile"))
+				);
+		NewProjectile->Launch(LaunchSpeed);
+		//Reload();
+	//}
 }
 
 void ATank::Reload()

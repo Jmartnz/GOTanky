@@ -8,6 +8,7 @@
 class UTankAimingComponent;
 class UTankTurret;
 class UTankBarrel;
+class UTankTrack;
 class AProjectile;
 
 UCLASS()
@@ -23,12 +24,16 @@ public:
 	void SetTurretReference(UTankTurret* TurretToSet);
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetRightTrackReference(UTankTrack* TrackToSet);
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetLeftTrackReference(UTankTrack* TrackToSet);
 
 	void AimAt(FVector HitLocation) const;
 	bool HasFinishedReloading();
 
 	UFUNCTION(BlueprintCallable, Category = Actions)
-	void Fire() const;
+	void Fire();
 
 	UFUNCTION(BlueprintCallable, Category = Actions)
 	void Reload();
@@ -36,7 +41,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = Firing)
 	float LaunchSpeed = 10000; // TODO Find sensible value
 
-	UPROPERTY(EditAnywhere, Category = Firing)
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float ReloadDuration = 5.0f; // TODO Find sensible value
 
 	float LastReloadTime = 0.0f; // TODO Find sensible value

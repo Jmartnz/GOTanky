@@ -4,6 +4,7 @@
 #include "TankAimingComponent.h"
 #include "TankTurret.h"
 #include "TankBarrel.h"
+#include "TankTrack.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -23,6 +24,16 @@ void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	Barrel = BarrelToSet;
+}
+
+void UTankAimingComponent::SetRightTrackReference(UTankTrack* TrackToSet)
+{
+	RightTrack = TrackToSet;
+}
+
+void UTankAimingComponent::SetLeftTrackReference(UTankTrack* TrackToSet)
+{
+	LeftTrack = TrackToSet;
 }
 
 UTankBarrel* UTankAimingComponent::GetBarrel() const
