@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include "Components/StaticMeshComponent.h"
 #include "TankTrack.generated.h"
 
@@ -14,7 +13,14 @@ class GOTANKY_API UTankTrack : public UStaticMeshComponent
 {
 	GENERATED_BODY()
 	
+public:
+
+	UFUNCTION(BluePrintCallable, Category = Input)
+	void SetThrottle(float Throttle);
 	
-	
+	// Max force per track in units
+	// TODO Find a sensible default
+	UPROPERTY(EditDefaultsOnly)
+	float MaxDrivingForce = 30000000.0f;
 	
 };
