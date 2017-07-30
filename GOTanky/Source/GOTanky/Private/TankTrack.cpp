@@ -3,7 +3,6 @@
 #include "GOTanky.h"
 #include "TankTrack.h"
 
-
 void UTankTrack::SetThrottle(float Throttle)
 {
 	FVector ForceApplied = GetForwardVector() * Throttle * MaxDrivingForce;
