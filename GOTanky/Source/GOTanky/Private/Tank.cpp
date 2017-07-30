@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Jmartnz 2017
 
 #include "GOTanky.h"
 #include "Tank.h"
@@ -29,26 +29,6 @@ void ATank::AimAt(FVector HitLocation) const
 bool ATank::HasFinishedReloading()
 {
 	return (LastReloadTime + ReloadDuration) <= GetWorld()->GetTimeSeconds();
-}
-
-void ATank::SetTurretReference(UTankTurret* TurretToSet)
-{
-	TankAimingComponent->SetTurretReference(TurretToSet);
-}
-
-void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
-{
-	TankAimingComponent->SetBarrelReference(BarrelToSet);
-}
-
-void ATank::SetRightTrackReference(UTankTrack* TrackToSet)
-{
-	TankAimingComponent->SetRightTrackReference(TrackToSet);
-}
-
-void ATank::SetLeftTrackReference(UTankTrack* TrackToSet)
-{
-	TankAimingComponent->SetLeftTrackReference(TrackToSet);
 }
 
 void ATank::Fire()

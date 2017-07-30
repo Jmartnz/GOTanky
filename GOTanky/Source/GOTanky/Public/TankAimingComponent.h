@@ -1,9 +1,17 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Jmartnz 2017
 
 #pragma once
 
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
+
+UENUM()
+enum class EFiringState : uint8
+{
+	Locked,
+	Aiming,
+	Reloading
+};
 
 class UTankTurret;
 class UTankBarrel;
@@ -15,17 +23,15 @@ class GOTANKY_API UTankAimingComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:
-	UTankAimingComponent();
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetTurretReference(UTankTurret* TurretToSet);
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetRightTrackReference(UTankTrack* TrackToSet);
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetLeftTrackReference(UTankTrack* TrackToSet);
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void Initialise(UTankTurret* TurretToSet, UTankBarrel* BarrelToSet);
+
 	UTankBarrel* GetBarrel() const;
 	void AimAt(FVector HitLocation, float LaunchSpeed);
+
+protected:
+	UPROPERTY(BlueprintReadOnly, Category = "State")
+	EFiringState FiringState = EFiringState::Reloading;
 
 private:
 	UTankTurret* Turret = nullptr;

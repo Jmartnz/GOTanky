@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Jmartnz 2017
 
 #pragma once
 
@@ -20,15 +20,6 @@ class GOTANKY_API ATank : public APawn
 public:	
 	ATank();
 	virtual void BeginPlay() override;
-
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetTurretReference(UTankTurret* TurretToSet);
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetRightTrackReference(UTankTrack* TrackToSet);
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetLeftTrackReference(UTankTrack* TrackToSet);
 
 	void AimAt(FVector HitLocation) const;
 	bool HasFinishedReloading();
