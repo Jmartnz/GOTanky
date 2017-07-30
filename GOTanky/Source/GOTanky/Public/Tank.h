@@ -51,6 +51,7 @@ public:
 	TSubclassOf<AProjectile> Projectile;
 
 protected:
+	UPROPERTY(BluePrintReadOnly)
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
 	UPROPERTY(BluePrintReadOnly)
