@@ -1,10 +1,13 @@
 // Copyright Jmartnz 2017
 
-#include "GOTanky.h"
 #include "TankAimingComponent.h"
+#include "GOTanky.h"
 #include "TankTurret.h"
 #include "TankBarrel.h"
 #include "TankTrack.h"
+#include "Runtime/Engine/Public/DrawDebugHelpers.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
+#include "Runtime/Engine/Classes/Engine/World.h"
 
 void UTankAimingComponent::Initialise(UTankTurret* TurretToSet, UTankBarrel* BarrelToSet)
 {

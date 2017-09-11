@@ -1,7 +1,7 @@
 // Copyright Jmartnz 2017
 
-#include "GOTanky.h"
 #include "TankMovementComponent.h"
+#include "GOTanky.h"
 #include "TankTrack.h"
 
 void UTankMovementComponent::Initialise(UTankTrack* RightTrackToSet, UTankTrack* LeftTrackToSet)

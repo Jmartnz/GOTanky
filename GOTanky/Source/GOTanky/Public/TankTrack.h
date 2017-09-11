@@ -14,7 +14,6 @@ class GOTANKY_API UTankTrack : public UStaticMeshComponent
 	GENERATED_BODY()
 	
 public:
-
 	UFUNCTION(BluePrintCallable, Category = Input)
 	void SetThrottle(float Throttle);
 	
@@ -22,5 +21,5 @@ public:
 	// TODO Find a sensible default
 	UPROPERTY(EditDefaultsOnly)
 	float MaxDrivingForce = 30000000.0f;
-	
+
 };

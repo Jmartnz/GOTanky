@@ -8,6 +8,9 @@ public class GOTankyEditorTarget : TargetRules
 	public GOTankyEditorTarget(TargetInfo Target)
 	{
 		Type = TargetType.Editor;
+
+        bUseUnityBuild = false;
+        bUsePCHFiles = false;
 	}
 
 	//

@@ -1,8 +1,7 @@
 // Copyright Jmartnz 2017
 
-#include "GOTanky.h"
 #include "Projectile.h"
-
+#include "GOTanky.h"
 
 // Sets default values
 AProjectile::AProjectile()
