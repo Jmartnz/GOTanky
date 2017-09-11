@@ -1,7 +1,6 @@
 // Copyright Jmartnz 2017
 
 #include "TankTrack.h"
-#include "GOTanky.h"
 #include "Runtime/Engine/Classes/Components/PrimitiveComponent.h"
 
 void UTankTrack::SetThrottle(float Throttle)

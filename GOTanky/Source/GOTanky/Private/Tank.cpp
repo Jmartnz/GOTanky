@@ -1,7 +1,6 @@
 // Copyright Jmartnz 2017
 
 #include "Tank.h"
-#include "GOTanky.h"
 #include "TankBarrel.h"
 #include "TankAimingComponent.h"
 #include "TankMovementComponent.h"

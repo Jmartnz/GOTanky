@@ -1,7 +1,6 @@
 // Copyright Jmartnz 2017
 
 #include "TankAIController.h"
-#include "GOTanky.h"
 #include "TankPlayerController.h"
 #include "Tank.h"
 #include "Engine/World.h"
@@ -17,12 +16,12 @@ void ATankAIController::Tick(float DeltaTime)
 	if (GetPlayerTank())
 	{
 		ATank* Tank = GetPlayerTank();
-		// Move towards the player
+		// Move towards the player within the acceptance radius
 		MoveToActor(Tank, AcceptanceRadius);
-
 		// Aim towards the player
 		FVector PlayerLocation = GetPlayerTank()->GetTargetLocation();
 		GetControlledTank()->AimAt(PlayerLocation);
+		// Fire when the barrel is loaded
 		if (GetControlledTank()->HasFinishedReloading())
 		{
 			GetControlledTank()->Fire();

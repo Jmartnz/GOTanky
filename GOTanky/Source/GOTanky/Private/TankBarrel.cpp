@@ -1,7 +1,6 @@
 // Copyright Jmartnz 2017
 
 #include "TankBarrel.h"
-#include "GOTanky.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
 
 void UTankBarrel::Elevate(float RelativeSpeed)

@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "CoreMinimal.h"
 #include "Components/StaticMeshComponent.h"
 #include "TankTurret.generated.h"
 
