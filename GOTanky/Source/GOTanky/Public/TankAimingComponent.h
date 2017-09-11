@@ -17,6 +17,9 @@ class UTankTurret;
 class UTankBarrel;
 class UTankTrack;
 
+/**
+ * 
+ */
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class GOTANKY_API UTankAimingComponent : public UActorComponent
 {
@@ -31,7 +34,7 @@ public:
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-	EFiringState FiringState = EFiringState::Reloading;
+	EFiringState FiringState = EFiringState::Locked;
 
 private:
 	UTankTurret* Turret = nullptr;
