@@ -16,11 +16,12 @@ class GOTANKY_API UTankTrack : public UStaticMeshComponent
 	
 public:
 	UFUNCTION(BluePrintCallable, Category = Input)
+	// Applies a force at the track location in order to move the tank.
 	void SetThrottle(float Throttle);
-	
-	// Max force per track in units
-	// TODO Find a sensible default
+
+private:
 	UPROPERTY(EditDefaultsOnly)
+	// Max force per track in units.
 	float MaxDrivingForce = 30000000.0f;
 
 };
