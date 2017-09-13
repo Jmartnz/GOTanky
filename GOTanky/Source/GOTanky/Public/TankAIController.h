@@ -6,8 +6,6 @@
 #include "AIController.h"
 #include "TankAIController.generated.h"
 
-class ATank;
-
 /**
  * 
  */
@@ -21,9 +19,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	// Returns a pointer to the tank controlled by the player.
-	ATank* GetPlayerTank() const;
-	// Returns a pointer to the tank controlled by the AI.
-	ATank* GetControlledTank() const;
+	APawn* GetPlayer() const;
 
 private:
 	// Maximum distance to the player that the AI tanks will try to achieve.

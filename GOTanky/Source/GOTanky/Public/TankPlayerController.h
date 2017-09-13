@@ -6,7 +6,7 @@
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
 
-class ATank;
+class UTankAimingComponent;
 
 /**
  * 
@@ -20,12 +20,12 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 	
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	// Return the tank controlled by the player.
-	ATank* GetControlledTank() const;
-
 	// Tell the controlled tank to aim at the crosshair.
 	void AimTowardsCrosshair() const;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
 	
 private:
 	UPROPERTY(EditAnywhere)

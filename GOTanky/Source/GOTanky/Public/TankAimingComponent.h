@@ -16,7 +16,7 @@ enum class EFiringState : uint8
 
 class UTankTurret;
 class UTankBarrel;
-class UTankTrack;
+class AProjectile;
 
 /**
  * 
@@ -34,18 +34,20 @@ public:
 	// Returns a pointer to Barrel used by the aiming component.
 	UTankBarrel* GetBarrel() const;
 	// Calculates the aim solution then tells the Turret and the Barrel to aim at resulting direction.
-	void AimAt(FVector HitLocation, float LaunchSpeed);
+	void AimAt(FVector HitLocation);
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = State)
 	// Enum which dictates the current firing state of the Barrel.
 	EFiringState FiringState = EFiringState::Locked;
+	UPROPERTY(EditAnywhere, Category = Firing)
+	float LaunchSpeed = 10000; // TODO Find sensible value
 
 private:
+	UTankAimingComponent();
+
 	UTankTurret* Turret = nullptr;
 	UTankBarrel* Barrel = nullptr;
-	UTankTrack* RightTrack = nullptr;
-	UTankTrack* LeftTrack = nullptr;
 
 	// Moves the turret towards the AimDirection by rotating its X axis.
 	void MoveTurretTowards(FVector AimDirection);

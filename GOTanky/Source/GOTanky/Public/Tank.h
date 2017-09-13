@@ -20,11 +20,7 @@ class GOTANKY_API ATank : public APawn
 
 public:
 	ATank();
-	virtual void BeginPlay() override;
-	virtual void Tick(float DeltaTime) override;
 
-	// Tell the TankAimingComponent to aim at this location.
-	void AimAt(FVector HitLocation) const;
 	// Returns true if the tank has finished reloading.
 	bool HasFinishedReloading();
 
@@ -45,11 +41,10 @@ private:
 	UPROPERTY(EditAnywhere, Category = Firing)
 	float LaunchSpeed = 10000; // TODO Find sensible value
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
-	float ReloadDuration = 5.0f; // TODO Find sensible value
+	float ReloadDuration = 1.0f; // TODO Find sensible value
 	float LastReloadTime = 0.0f;
 	UPROPERTY(EditAnywhere, Category = Setup)
 	TSubclassOf<AProjectile> Projectile;
 
-	// Called to bind functionality to input.
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	UTankBarrel* Barrel = nullptr; // TODO Remove
 };

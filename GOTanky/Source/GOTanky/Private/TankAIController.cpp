@@ -2,8 +2,8 @@
 
 #include "TankAIController.h"
 #include "TankPlayerController.h"
-#include "Tank.h"
-#include "Engine/World.h"
+#include "TankAimingComponent.h"
+#include "Runtime/Engine/Classes/Engine/World.h"
 
 void ATankAIController::BeginPlay()
 {
@@ -13,33 +13,27 @@ void ATankAIController::BeginPlay()
 void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (GetPlayerTank())
+	if (GetPlayer())
 	{
-		ATank* Tank = GetPlayerTank();
 		// Move towards the player within the acceptance radius
-		MoveToActor(Tank, AcceptanceRadius);
+		MoveToActor(GetPlayer(), AcceptanceRadius);
 		// Aim towards the player
-		FVector PlayerLocation = GetPlayerTank()->GetTargetLocation();
-		GetControlledTank()->AimAt(PlayerLocation);
+		FVector PlayerLocation = GetPlayer()->GetTargetLocation();
+		auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+		AimingComponent->AimAt(PlayerLocation);
 		// Fire when the barrel is loaded
-		if (GetControlledTank()->HasFinishedReloading())
+		/*if (GetControlledTank()->HasFinishedReloading())
 		{
 			GetControlledTank()->Fire();
 			GetControlledTank()->Reload();
-		}
+		}*/
 	}
 }
 
-ATank* ATankAIController::GetPlayerTank() const
+APawn* ATankAIController::GetPlayer() const
 {
 	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
 	if (!PlayerController) { return nullptr; }
 	ATankPlayerController* TankPlayerController = Cast<ATankPlayerController>(PlayerController);
-	return TankPlayerController->GetControlledTank();
-}
-
-ATank* ATankAIController::GetControlledTank() const
-{
-	if (!GetPawn()) { return nullptr; }
-	return Cast<ATank>(GetPawn());
+	return TankPlayerController->GetPawn();
 }

@@ -3,10 +3,15 @@
 #include "TankAimingComponent.h"
 #include "TankTurret.h"
 #include "TankBarrel.h"
-#include "TankTrack.h"
+#include "Projectile.h"
 #include "Runtime/Engine/Public/DrawDebugHelpers.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
+
+UTankAimingComponent::UTankAimingComponent()
+{
+	PrimaryComponentTick.bCanEverTick = false;
+}
 
 void UTankAimingComponent::Initialise(UTankTurret* TurretToSet, UTankBarrel* BarrelToSet)
 {
@@ -19,12 +24,12 @@ UTankBarrel* UTankAimingComponent::GetBarrel() const
 	return Barrel;
 }
 
-void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
+void UTankAimingComponent::AimAt(FVector HitLocation)
 {
 	if (!Barrel) { return; }
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
 	// TODO Remove debug line
-	DrawDebugLine(GetWorld(), StartLocation, HitLocation, FColor(0, 0, 255), false, -1.f, 0.f, 5.f);
+	// DrawDebugLine(GetWorld(), StartLocation, HitLocation, FColor(0, 0, 255), false, -1.f, 0.f, 5.f);
 	FVector OutLaunchVelocity;
 	bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity
 	(
