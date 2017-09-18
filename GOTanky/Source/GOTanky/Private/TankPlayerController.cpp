@@ -9,7 +9,7 @@ void ATankPlayerController::BeginPlay()
 	Super::BeginPlay();
 	// Log an error if the player is not controlling any tank
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
-	if (AimingComponent)
+	if (ensure(AimingComponent))
 	{
 		FoundAimingComponent(AimingComponent);
 	}
@@ -24,7 +24,8 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 void ATankPlayerController::AimTowardsCrosshair() const
 {
-	if (!GetPawn()) { return; }
+	// TODO Find out why this ensure fails when opening PlayerController_BP after compile
+	if (!ensure(GetPawn())) { return; }
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	FVector HitLocation;
 	// We only tell the tank to aim if the crosshair is hitting something

@@ -13,7 +13,7 @@ void ATankAIController::BeginPlay()
 void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (GetPlayer())
+	if (ensure(GetPlayer()))
 	{
 		// Move towards the player within the acceptance radius
 		MoveToActor(GetPlayer(), AcceptanceRadius);
@@ -33,7 +33,7 @@ void ATankAIController::Tick(float DeltaTime)
 APawn* ATankAIController::GetPlayer() const
 {
 	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
-	if (!PlayerController) { return nullptr; }
+	if (!ensure(PlayerController)) { return nullptr; }
 	ATankPlayerController* TankPlayerController = Cast<ATankPlayerController>(PlayerController);
 	return TankPlayerController->GetPawn();
 }

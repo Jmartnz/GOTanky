@@ -30,11 +30,19 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	// Initialise the Turret and the Barrel for aiming use.
 	void Initialise(UTankTurret* TurretToSet, UTankBarrel* BarrelToSet);
+	UFUNCTION(BlueprintCallable, Category = Actions)
+	// Spawns a new projectile at barrel location and fires it.
+	void Fire();
+	UFUNCTION(BlueprintCallable, Category = Actions)
+	// Reloads the barrel in order to fire again.
+	void Reload();
 
-	// Returns a pointer to Barrel used by the aiming component.
-	UTankBarrel* GetBarrel() const;
+	// Returns true if the tank has finished reloading.
+	bool HasFinishedReloading();
 	// Calculates the aim solution then tells the Turret and the Barrel to aim at resulting direction.
 	void AimAt(FVector HitLocation);
+	// Returns a pointer to Barrel used by the aiming component.
+	UTankBarrel* GetBarrel() const;
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = State)
@@ -53,4 +61,10 @@ private:
 	void MoveTurretTowards(FVector AimDirection);
 	// Moves the Barrel towards the AimDirection by rotating its Y axis.
 	void MoveBarrelTowards(FVector AimDirection);
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float ReloadDuration = 1.0f; // TODO Find sensible value
+	float LastReloadTime = 0.0f;
+	UPROPERTY(EditAnywhere, Category = Setup)
+	TSubclassOf<AProjectile> Projectile;
 };

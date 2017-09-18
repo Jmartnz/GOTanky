@@ -19,6 +19,32 @@ void UTankAimingComponent::Initialise(UTankTurret* TurretToSet, UTankBarrel* Bar
 	Barrel = BarrelToSet;
 }
 
+bool UTankAimingComponent::HasFinishedReloading()
+{
+	return (LastReloadTime + ReloadDuration) <= GetWorld()->GetTimeSeconds();
+}
+
+void UTankAimingComponent::Fire()
+{
+	// We can fire only if the barrel is loaded
+	if (HasFinishedReloading()) {
+		auto NewProjectile = GetWorld()->SpawnActor<AProjectile>(
+			Projectile,
+			Barrel->GetSocketLocation(FName("Projectile")),
+			Barrel->GetSocketRotation(FName("Projectile"))
+			);
+		NewProjectile->Launch(LaunchSpeed);
+		Reload();
+	}
+}
+
+void UTankAimingComponent::Reload()
+{
+	// TODO Fix FiringState
+	FiringState = EFiringState::Reloading;
+	LastReloadTime = GetWorld()->GetTimeSeconds();
+}
+
 UTankBarrel* UTankAimingComponent::GetBarrel() const
 {
 	return Barrel;
@@ -26,7 +52,7 @@ UTankBarrel* UTankAimingComponent::GetBarrel() const
 
 void UTankAimingComponent::AimAt(FVector HitLocation)
 {
-	if (!Barrel) { return; }
+	if (!ensure(Turret) || !ensure(Barrel)) { return; }
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
 	// TODO Remove debug line
 	// DrawDebugLine(GetWorld(), StartLocation, HitLocation, FColor(0, 0, 255), false, -1.f, 0.f, 5.f);
@@ -58,7 +84,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 
 void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
 {
-	if (!Turret) { return; }
+	if (!ensure(Turret)) { return; }
 	FRotator TurretRotation = Turret->GetForwardVector().Rotation();
 	FRotator AimDirectionAsRotator = AimDirection.Rotation();
 	FRotator DeltaRotator = AimDirectionAsRotator - TurretRotation;
@@ -68,7 +94,7 @@ void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
-	if (!Barrel) { return; }
+	if (!ensure(Barrel)) { return; }
 	FRotator BarrelRotation = Barrel->GetForwardVector().Rotation();
 	FRotator AimDirectionAsRotator = AimDirection.Rotation();
 	FRotator DeltaRotator = AimDirectionAsRotator - BarrelRotation;
