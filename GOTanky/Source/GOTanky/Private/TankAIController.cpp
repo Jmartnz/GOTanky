@@ -15,18 +15,11 @@ void ATankAIController::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if (ensure(GetPlayer()))
 	{
-		// Move towards the player within the acceptance radius
 		MoveToActor(GetPlayer(), AcceptanceRadius);
-		// Aim towards the player
 		FVector PlayerLocation = GetPlayer()->GetTargetLocation();
 		auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 		AimingComponent->AimAt(PlayerLocation);
-		// Fire when the barrel is loaded
-		/*if (GetControlledTank()->HasFinishedReloading())
-		{
-			GetControlledTank()->Fire();
-			GetControlledTank()->Reload();
-		}*/
+		AimingComponent->Fire();
 	}
 }
 
