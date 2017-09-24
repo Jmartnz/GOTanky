@@ -58,7 +58,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = Firing)
 	USoundBase* ExplosionSound = nullptr;
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
-	float ReloadDuration = 5.0f; // TODO Find sensible value
+	float ReloadDuration = 2.5f; // TODO Find sensible value
 	float LastReloadTime = 0.0f;
 	UPROPERTY(EditAnywhere, Category = Setup)
 	TSubclassOf<AProjectile> Projectile;
