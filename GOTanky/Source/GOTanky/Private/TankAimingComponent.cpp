@@ -48,6 +48,11 @@ void UTankAimingComponent::SetFiringState()
 	}
 }
 
+EFiringState UTankAimingComponent::GetFiringState() const
+{
+	return FiringState;
+}
+
 bool UTankAimingComponent::HasFinishedReloading()
 {
 	return (LastReloadTime + ReloadDuration) <= GetWorld()->GetTimeSeconds();
@@ -56,7 +61,7 @@ bool UTankAimingComponent::HasFinishedReloading()
 bool UTankAimingComponent::IsBarrelLocked()
 {
 	if (!ensure(Barrel)) { return false; }
-	return Barrel->GetForwardVector().Equals(AimDirection, 0.1f);
+	return Barrel->GetForwardVector().Equals(AimDirection, 0.05f);
 }
 
 void UTankAimingComponent::Fire()
@@ -121,7 +126,15 @@ void UTankAimingComponent::MoveTurretTowards()
 	FRotator AimDirectionAsRotator = AimDirection.Rotation();
 	FRotator DeltaRotator = AimDirectionAsRotator - TurretRotation;
 	// Turret always rotates on the X axis, that is Yaw
-	Turret->Rotate(DeltaRotator.Yaw);
+	if (FMath::Abs(DeltaRotator.Yaw) < 180)
+	{
+		Turret->Rotate(DeltaRotator.Yaw);
+	}
+	else
+	{
+		Turret->Rotate(-DeltaRotator.Yaw);
+	}
+	
 }
 
 void UTankAimingComponent::MoveBarrelTowards()

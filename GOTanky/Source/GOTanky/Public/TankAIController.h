@@ -21,8 +21,9 @@ public:
 	// Returns a pointer to the tank controlled by the player.
 	APawn* GetPlayer() const;
 
-private:
+protected:
+	UPROPERTY(EditDefaultsOnly)
 	// Maximum distance to the player that the AI tanks will try to achieve.
-	float AcceptanceRadius = 3000;
+	float AcceptanceRadius = 7000;
 
 };

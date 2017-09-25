@@ -13,20 +13,23 @@ void ATankAIController::BeginPlay()
 void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (ensure(GetPlayer()))
+	if (GetPlayer())
 	{
 		MoveToActor(GetPlayer(), AcceptanceRadius);
 		FVector PlayerLocation = GetPlayer()->GetTargetLocation();
 		auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 		AimingComponent->AimAt(PlayerLocation);
-		AimingComponent->Fire();
+		if (AimingComponent->GetFiringState() == EFiringState::Locked)
+		{
+			AimingComponent->Fire();
+		}
 	}
 }
 
 APawn* ATankAIController::GetPlayer() const
 {
 	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
-	if (!ensure(PlayerController)) { return nullptr; }
+	if (!PlayerController) { return nullptr; }
 	ATankPlayerController* TankPlayerController = Cast<ATankPlayerController>(PlayerController);
 	return TankPlayerController->GetPawn();
 }

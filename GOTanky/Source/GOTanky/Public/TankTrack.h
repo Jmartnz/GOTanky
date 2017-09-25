@@ -22,7 +22,7 @@ public:
 private:
 	UPROPERTY(EditDefaultsOnly)
 	// Max force per track in units.
-	float MaxDrivingForce = 40000000.0f;
+	float MaxDrivingForce = 400000.0f;
 	float CurrentThrottle = 0.0f;
 
 	UTankTrack();

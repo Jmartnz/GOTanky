@@ -36,7 +36,7 @@ private:
 	float CrosshairLocationY = 0.3333f;
 	UPROPERTY(EditAnywhere)
 	// Line trace maximum range used to calculate HitLocation.
-	float LineTraceRange = 10000.0f;
+	float LineTraceRange = 15000.0f;
 
 	// Check if the crosshair is aiming at something that could be hit. Returns true if so.
 	bool GetSightRayHitLocation(FVector& HitLocation) const;

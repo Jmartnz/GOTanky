@@ -44,13 +44,15 @@ public:
 	void AimAt(FVector HitLocation);
 	// Handles reload logic and sets FiringState accordingly.
 	void SetFiringState();
+	// Returns current FiringState
+	EFiringState GetFiringState() const;
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = State)
 	// Enum which dictates the current firing state of the Barrel.
 	EFiringState FiringState = EFiringState::Aiming;
 	UPROPERTY(EditAnywhere, Category = Firing)
-	float LaunchSpeed = 5000; // TODO Find sensible value
+	float LaunchSpeed = 8000; // TODO Find sensible value
 
 private:
 	UTankAimingComponent();
@@ -58,7 +60,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = Firing)
 	USoundBase* ExplosionSound = nullptr;
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
-	float ReloadDuration = 2.5f; // TODO Find sensible value
+	float ReloadDuration = 4.5f; // TODO Find sensible value
 	float LastReloadTime = 0.0f;
 	UPROPERTY(EditAnywhere, Category = Setup)
 	TSubclassOf<AProjectile> Projectile;
