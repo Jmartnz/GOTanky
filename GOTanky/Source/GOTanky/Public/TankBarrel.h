@@ -21,7 +21,7 @@ public:
 private:
 	UPROPERTY(EditAnywhere, Category = Setup)
 	// Speed at which the barrel elevates in degrees per second.
-	float MaxDegreesPerSecond = 10;
+	float MaxDegreesPerSecond = 30;
 	UPROPERTY(EditAnywhere, Category = Setup)
 	// Maximum value for the barrel elevation in degrees.
 	float MaxElevationDegrees = 30;

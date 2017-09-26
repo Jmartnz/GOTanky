@@ -20,7 +20,7 @@ void UTankAimingComponent::BeginPlay()
 
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
-	SetFiringState();
+	UpdateFiringState();
 }
 
 void UTankAimingComponent::Initialise(UTankTurret* TurretToSet, UTankBarrel* BarrelToSet)
@@ -29,28 +29,40 @@ void UTankAimingComponent::Initialise(UTankTurret* TurretToSet, UTankBarrel* Bar
 	Barrel = BarrelToSet;
 }
 
-void UTankAimingComponent::SetFiringState()
+void UTankAimingComponent::UpdateFiringState()
 {
-	if (HasFinishedReloading())
+	if (HasAmmo())
 	{
-		if (IsBarrelLocked())
+		if (HasFinishedReloading())
 		{
-			FiringState = EFiringState::Locked;
+			if (IsBarrelLocked())
+			{
+				FiringState = EFiringState::Locked;
+			}
+			else
+			{
+				FiringState = EFiringState::Aiming;
+			}
 		}
 		else
 		{
-			FiringState = EFiringState::Aiming;
+			FiringState = EFiringState::Reloading;
 		}
 	}
 	else
 	{
-		FiringState = EFiringState::Reloading;
+		FiringState = EFiringState::OutOfAmmo;
 	}
 }
 
 EFiringState UTankAimingComponent::GetFiringState() const
 {
 	return FiringState;
+}
+
+bool UTankAimingComponent::HasAmmo() const
+{
+	return Ammo > 0;
 }
 
 bool UTankAimingComponent::HasFinishedReloading()
@@ -78,6 +90,10 @@ void UTankAimingComponent::Fire()
 		if (ExplosionSound)
 		{
 			UGameplayStatics::PlaySoundAtLocation(GetWorld(), ExplosionSound, Barrel->GetSocketLocation(FName("Projectile")));
+		}
+		if (Ammo > 0)
+		{
+			Ammo--;
 		}
 		Reload();
 	}

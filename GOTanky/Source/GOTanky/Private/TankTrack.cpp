@@ -33,7 +33,6 @@ void UTankTrack::OnHit()
 {
 	DriveTrack();
 	ApplySidewaysForce();
-	UE_LOG(LogTemp, Warning, TEXT("%s : %f"), *GetName(), CurrentThrottle)
 	CurrentThrottle = 0.0f;
 }
 

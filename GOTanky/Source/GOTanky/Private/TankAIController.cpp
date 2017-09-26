@@ -17,11 +17,25 @@ void ATankAIController::Tick(float DeltaTime)
 	{
 		MoveToActor(GetPlayer(), AcceptanceRadius);
 		FVector PlayerLocation = GetPlayer()->GetTargetLocation();
+
 		auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 		AimingComponent->AimAt(PlayerLocation);
-		if (AimingComponent->GetFiringState() == EFiringState::Locked)
+		AimingComponent->UpdateFiringState();
+		switch (AimingComponent->GetFiringState())
 		{
-			AimingComponent->Fire();
+			case EFiringState::Locked:
+				AimingComponent->Fire();
+				// UE_LOG(LogTemp, Warning, TEXT("AI Tank %s FIRE!"), *GetName())
+				break;
+			case EFiringState::Aiming:
+				// UE_LOG(LogTemp, Warning, TEXT("AI Tank %s is aiming..."), *GetName())
+				break;
+			case EFiringState::Reloading:
+				// UE_LOG(LogTemp, Warning, TEXT("AI Tank %s is reloading!"), *GetName())
+				break;
+			case EFiringState::OutOfAmmo:
+				// UE_LOG(LogTemp, Warning, TEXT("AI Tank %s is out of ammo."), *GetName())
+				break;
 		}
 	}
 }

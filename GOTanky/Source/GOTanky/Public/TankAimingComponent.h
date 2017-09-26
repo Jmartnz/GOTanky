@@ -11,7 +11,8 @@ enum class EFiringState : uint8
 {
 	Locked,		// The Barrel is not moving and is ready to fire.
 	Aiming,		// The Barrel is moving and therefore it cannot fire.
-	Reloading	// The Tank is reloading and therefore it cannot fire.
+	Reloading,	// The Tank is reloading and therefore it cannot fire.
+	OutOfAmmo	// The Tank is out of ammo and cannot further fire.
 };
 
 class UTankTurret;
@@ -43,7 +44,7 @@ public:
 	// Calculates the aim solution then tells the Turret and the Barrel to aim at resulting direction.
 	void AimAt(FVector HitLocation);
 	// Handles reload logic and sets FiringState accordingly.
-	void SetFiringState();
+	void UpdateFiringState();
 	// Returns current FiringState
 	EFiringState GetFiringState() const;
 
@@ -51,6 +52,8 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = State)
 	// Enum which dictates the current firing state of the Barrel.
 	EFiringState FiringState = EFiringState::Aiming;
+	UPROPERTY(BlueprintReadOnly, Category = Firing)
+	int32 Ammo = 3;
 	UPROPERTY(EditAnywhere, Category = Firing)
 	float LaunchSpeed = 8000; // TODO Find sensible value
 
@@ -69,6 +72,8 @@ private:
 	UTankTurret* Turret = nullptr;
 	UTankBarrel* Barrel = nullptr;
 
+	// Returns true if the tank has ammo
+	bool HasAmmo() const;
 	// Returns true if the tank has finished reloading.
 	bool HasFinishedReloading();
 	// Returns true if the barrel is locked and ready to fire.

@@ -24,6 +24,6 @@ public:
 protected:
 	UPROPERTY(EditDefaultsOnly)
 	// Maximum distance to the player that the AI tanks will try to achieve.
-	float AcceptanceRadius = 7000;
+	float AcceptanceRadius = 5000;
 
 };
